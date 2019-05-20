@@ -62,20 +62,29 @@ public class CharController : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         // фризим позиции чтобы дрон не переворачивался
-        rigid.constraints = RigidbodyConstraints.FreezeRotation;
-        rigid.useGravity = false;
-        rigid.mass = 3;
-        rigid.drag = 1;
-        rigid.angularDrag = 10;
-
+        if (rigid != null)
+        {
+            rigid.constraints = RigidbodyConstraints.FreezeRotation;
+            rigid.useGravity = false;
+            rigid.mass = 3;
+            rigid.drag = 1;
+            rigid.angularDrag = 10;
+        }
+        else
+        {
+            Debug.LogWarningFormat("Pls. Add a Rigidbody component to this GameObject");
+        }
     }
 
     private void FixedUpdate()
     {
         if (!activeDamage)
         {
-            Move();
-            RotateDrone();
+            if (rigid != null)
+            {
+                Move();
+                RotateDrone();
+            }
         }
     }
     private void Update()
